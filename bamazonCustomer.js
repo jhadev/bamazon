@@ -58,7 +58,7 @@ const questions = () => {
           }
           return choiceArray;
         },
-        message: "Which item would you like to purchase? (USE ID#)"
+        message: "Which item would you like to purchase?"
       },
       {
         name: "quantity",
@@ -75,9 +75,11 @@ const questions = () => {
     .then(function (answer) {
       var chosenItem;
       for (var i = 0; i < results.length; i++) {
+        if (results[i].product_name === answer.purchase) {
   
           chosenItem = results[i];
       }
+    }
 
 
      if (chosenItem.stock_quantity >= parseInt(answer.quantity)) {
@@ -107,7 +109,7 @@ const questions = () => {
       }
      else {
       console.log("Insufficient Quantity")
-      startApp();
+      questions();
      }
 
     });
