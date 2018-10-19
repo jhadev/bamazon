@@ -20,5 +20,24 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
 
+  startApp();
  
 });
+
+const header = '==========================WELCOME TO BAMAZON=========================='
+
+const startApp = () => {
+  connection.query("SELECT * FROM products", function(err, res) {
+    for (var i = 0; i < res.length; i++) {
+      console.log(`
+      ${header}
+      ID: ${res[i].id}
+      Product Name: ${res[i].product_name}
+      Department Name: ${res[i].department_name}
+      Price: ${res[i].price}
+      Quantity in Stock: ${res[i].stock_quantity}
+
+      `);
+    }
+  });
+}
