@@ -38,6 +38,29 @@ const startApp = () => {
       Quantity in Stock: ${res[i].stock_quantity}
 
       `);
+      //inquirer function goes here
     }
+    questions();
   });
 }
+
+const questions = () => {
+    inquirer
+      .prompt([
+        {
+        name: "purchase",
+        type: "input",
+        message: "Which item would you like to purchase? (USE ID#)"
+        },
+        {
+        name: "quantity",
+        type: "input",
+        message: "How many units would you like you purchase?"
+        }
+        ])
+      .then(function(answer) {
+        console.log("ok")
+            
+      });
+  }
+
