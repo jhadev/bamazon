@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var table = require("easy-table");
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -20,26 +21,30 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
   if (err) throw err;
 
-  startApp();
+  welcome();
 
 });
+
+const welcome = () => {
+  console.log(header)
+  inquirer
+  .prompt([
+    {
+    name: "welcome",
+    type: "confirm",
+    message: "Start Bamazon?"
+  }
+  ]).then(answers => {
+    startApp()
+    });
+}
 
 const header = '==========================WELCOME TO BAMAZON=========================='
 
 const startApp = () => {
   connection.query("SELECT * FROM products", function (err, res) {
-    for (var i = 0; i < res.length; i++) {
-      console.log(`
-      ${header}
-      ID: ${res[i].id}
-      Product Name: ${res[i].product_name}
-      Department Name: ${res[i].department_name}
-      Price: ${res[i].price}
-      Quantity in Stock: ${res[i].stock_quantity}
-
-      `);
-      //inquirer function goes here
-    }
+    console.log(table.print(res))
+    
     questions();
   });
 }
@@ -73,11 +78,11 @@ const questions = () => {
       }
     ])
     .then(function (answer) {
-      var chosenItem;
+      
       for (var i = 0; i < results.length; i++) {
         if (results[i].product_name === answer.purchase) {
   
-          chosenItem = results[i];
+        var chosenItem = results[i];
       }
     }
 
@@ -85,7 +90,7 @@ const questions = () => {
      if (chosenItem.stock_quantity >= parseInt(answer.quantity)) {
 
       let newQty = chosenItem.stock_quantity - parseInt(answer.quantity)
-      console.log(newQty)
+      let total = parseInt(answer.quantity) * chosenItem.price
       connection.query(
         "UPDATE products SET ? WHERE ?",
         [
@@ -102,7 +107,11 @@ const questions = () => {
         
         function(error) {
           if (error) throw err;
-          console.log("Order Confirmed");
+          console.log(`
+          Order Confirmed
+          Your total is: ${total}`
+          );
+
           startApp();
         }
       );
