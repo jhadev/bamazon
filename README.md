@@ -2,10 +2,10 @@
 
 ### A Node.js CLI app using mySQL
 ----
-####Users can place orders through the command line  on bamazon and the database will update to reflect the changes that have been made.
+###Users can place orders through the command line  on bamazon and the database will update to reflect the changes that have been made.
 
 ### requires
-[mySQL](https://www.npmjs.com/package/mySQL)
+[mySQL](https://www.npmjs.com/package/mysql)
 
 [inquirer](https://www.npmjs.com/package/inquirer)
 
