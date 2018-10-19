@@ -17,17 +17,17 @@ var connection = mysql.createConnection({
 });
 
 // connect to the mysql server and sql database
-connection.connect(function(err) {
+connection.connect(function (err) {
   if (err) throw err;
 
   startApp();
- 
+
 });
 
 const header = '==========================WELCOME TO BAMAZON=========================='
 
 const startApp = () => {
-  connection.query("SELECT * FROM products", function(err, res) {
+  connection.query("SELECT * FROM products", function (err, res) {
     for (var i = 0; i < res.length; i++) {
       console.log(`
       ${header}
@@ -45,22 +45,71 @@ const startApp = () => {
 }
 
 const questions = () => {
-    inquirer
-      .prompt([
-        {
+  connection.query("SELECT * FROM products", function(err, results) {
+    if (err) throw err;
+  inquirer
+    .prompt([{
         name: "purchase",
-        type: "input",
-        message: "Which item would you like to purchase? (USE ID#)"
+        type: "list",
+        choices: function() {
+          var choiceArray = [];
+          for (var i = 0; i < results.length; i++) {
+            choiceArray.push(results[i].product_name);
+          }
+          return choiceArray;
         },
-        {
+        message: "Which item would you like to purchase? (USE ID#)"
+      },
+      {
         name: "quantity",
         type: "input",
-        message: "How many units would you like you purchase?"
+        message: "How many units would you like you purchase?",
+        validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
         }
-        ])
-      .then(function(answer) {
-        console.log("ok")
-            
-      });
-  }
+      }
+    ])
+    .then(function (answer) {
+      var chosenItem;
+      for (var i = 0; i < results.length; i++) {
+  
+          chosenItem = results[i];
+      }
 
+
+     if (chosenItem.stock_quantity >= parseInt(answer.quantity)) {
+
+      let newQty = chosenItem.stock_quantity - parseInt(answer.quantity)
+      console.log(newQty)
+      connection.query(
+        "UPDATE products SET ? WHERE ?",
+        [
+          {
+            stock_quantity: newQty
+          },
+          {
+            id: chosenItem.id
+          }
+          
+        ],
+
+        
+        
+        function(error) {
+          if (error) throw err;
+          console.log("Order Confirmed");
+          startApp();
+        }
+      );
+      }
+     else {
+      console.log("Insufficient Quantity")
+      startApp();
+     }
+
+    });
+  })
+}
