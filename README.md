@@ -18,6 +18,6 @@
 * **Screen shots**
 ![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sample.PNG)
 
-![uh oh](https://github.com/jhadev/bamazom/raw/master/images/sampleinsuff.PNG)
+![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sampleinsuff.PNG)
 
 ---
