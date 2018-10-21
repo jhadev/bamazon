@@ -27,6 +27,8 @@ connection.connect(function (err) {
 });
 
 const welcome = () => {
+  connection.query("SELECT * FROM passwords", function(err, results) {
+    if (err) throw err;
   console.log(header)
   inquirer
   .prompt([
@@ -41,17 +43,25 @@ const welcome = () => {
     message: "Enter your manager password"
   },
   ]).then(answers => {
-    if (answers.login === "manager") {
+    for (var i = 0; i < results.length; i++) {
+    if (answers.login === results[i].password) {
       console.log(`Hello manager your password has been accepted`)
       startApp();
     }
+  
     else {
       console.log("password denied, try again")
       welcome();
     }
-    });
+  }
+})
+})
 }
 
+    
+
+
+  
 const header = '==========================WELCOME TO BAMAZON=========================='
 
 const startApp = () => {

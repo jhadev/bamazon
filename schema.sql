@@ -41,3 +41,17 @@ VALUES ("Kranzjams Vol: 443", "Music", 10, 21);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Kranzjams Vol: 1", "Music", 20, 2);
+
+-- used as proof of concept for manager login --
+CREATE TABLE passwords(
+  id INT NOT NULL AUTO_INCREMENT,
+  password VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id)
+  );
+
+INSERT INTO passwords (password)
+VALUES ("manager");
+
+INSERT INTO passwords (password)
+VALUES ("admin");
+
