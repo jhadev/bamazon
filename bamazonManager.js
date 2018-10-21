@@ -26,6 +26,8 @@ connection.connect(function (err) {
 
 });
 
+//connects to SQL db and checks from table "passwords" to allow manager to login.
+//if password is correct the app with start
 const welcome = () => {
   connection.query("SELECT * FROM passwords", function(err, results) {
     if (err) throw err;
@@ -65,5 +67,56 @@ const welcome = () => {
 const header = '==========================WELCOME TO BAMAZON=========================='
 
 const startApp = () => {
+  inquirer
+  .prompt([
+    {
+      name: "panel",
+      type: "list",
+      message: "What would you like to do?",
+      choices: ['View All Products', 'View Low Inventory', 'Add to Inventory', 'Add a New Product', 'Quit Manager Control Panel']
+    }
+  ]).then(answers => {
+    switch (answers.panel) {
+      case 'View All Products':
+        viewAllProducts();
+        break;
+      case 'View Low Inventory':
+        viewLowInventory();
+        break;
+      case 'Add to Inventory':
+        addToInventory();
+        break;
+      case 'Add a New Product':
+        addNewProduct();
+        break;
+      case 'Quit Manager Control Panel':
+        quitApp();
+    }
+  })
+}
+
+const viewAllProducts = () => {
+  connection.query("SELECT * FROM products", function (err, res) {
+    console.log(table.print(res))
+    
+    startApp();
+  });
+}
+
+const viewLowInventory = () => {
   console.log(`this isnt finished`)
 }
+
+const addToInventory = () => {
+  console.log(`this isnt finished`)
+}
+
+const addNewProduct = () => {
+  console.log(`this isnt finished`)
+}
+
+const quitApp = () => {
+  console.log("Goodbye")
+  connection.end();
+}
+
