@@ -41,10 +41,12 @@ const welcome = () => {
 }
 
 const header = '==========================WELCOME TO BAMAZON=========================='
+const footer = '======================================================================'
 
 const startApp = () => {
   connection.query("SELECT * FROM products", function (err, res) {
     console.log(table.print(res))
+    console.log(`${footer}`)
     
     questions();
   });
@@ -53,7 +55,7 @@ const startApp = () => {
 const questions = () => {
   connection.query("SELECT * FROM products", function(err, results) {
     if (err) throw err;
-  inquirer
+     inquirer
     .prompt([{
         name: "purchase",
         type: "list",
@@ -108,10 +110,10 @@ const questions = () => {
         
         function(error) {
           if (error) throw err;
-          console.log(`
-          Order Confirmed
-          Your total is: ${total}`
-          );
+    console.log(`
+    Order Confirmed
+    Your total is: ${total}
+    ${footer}`);
 
           startApp();
         }

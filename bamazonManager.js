@@ -60,10 +60,7 @@ const welcome = () => {
 })
 }
 
-    
-
-
-  
+const footer = '======================================================================'
 const header = '==========================WELCOME TO BAMAZON=========================='
 
 const startApp = () => {
@@ -99,6 +96,7 @@ const viewAllProducts = () => {
   connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw (err);
     console.log(table.print(res));
+    console.log(`${footer}`)
     
     startApp();
   });
@@ -108,21 +106,86 @@ const viewLowInventory = () => {
   connection.query("SELECT * FROM products WHERE stock_quantity <= 10", function (err, res) {
     if (err) throw (err);
     console.log(table.print(res));
+    console.log(`${footer}`);
 
     startApp();
   });
 }
 
 const addToInventory = () => {
-  console.log(`this isnt finished`)
+  connection.query("SELECT * FROM products", function (err, results) {
+    if (err) throw (err);
+    console.log(`${footer}`)
+    console.log(table.print(results));
+    console.log(`${footer}`)
+    inquirer
+    .prompt([{
+        name: "update",
+        type: "list",
+        choices: function() {
+          var choiceArray = [];
+          for (var i = 0; i < results.length; i++) {
+            choiceArray.push(results[i].product_name);
+          }
+          return choiceArray;
+        },
+        message: "Which item would you like to update?"
+      },
+      {
+        name: "quantity",
+        type: "input",
+        message: "How many units would you like to add?",
+        validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }
+      }
+    ]).then(function (answer) {
+      
+      for (var i = 0; i < results.length; i++) {
+        if (results[i].product_name === answer.update) {
+  
+        var chosenItem = results[i];
+      }
+    }
+//only allows for adding quantity not taking away
+      let newQty = chosenItem.stock_quantity + parseInt(answer.quantity)
+      connection.query("UPDATE products SET ? WHERE ?",
+        [
+          {
+            stock_quantity: newQty
+          },
+          {
+            id: chosenItem.id
+          }
+          
+        ],
+
+          function(error) {
+          if (error) throw err;
+  console.log(`
+  New Quantity of ${newQty} confirmed
+  ${footer}`);
+
+          startApp();
+        });
+     })
+    })
+
 }
 
 const addNewProduct = () => {
-  console.log(`this isnt finished`)
+  console.log(`
+  this isnt finished
+  ${footer}`)
 }
 
 const quitApp = () => {
-  console.log("Goodbye")
+  console.log(`
+  Goodbye
+  ${footer}`)
   connection.end();
 }
 

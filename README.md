@@ -29,3 +29,5 @@
 
 ![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sampleManager.PNG)
 
+![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sampleAdd.PNG)
+
