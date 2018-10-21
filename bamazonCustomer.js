@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var table = require("easy-table");
+require("dotenv").config();
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -13,7 +14,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "password",
+  password: process.env.SQL_PASSWORD,
   database: "products_db"
 });
 
