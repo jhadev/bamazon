@@ -15,8 +15,15 @@
 
 ----
 
+### Bamazon Customer app
+
 ![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sample.PNG)
 
 ![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sampleinsuff.PNG)
 
 ---
+
+### Bamazon Manager app
+
+![uh oh](https://github.com/jhadev/bamazon/raw/master/images/sampleManager.PNG)
+

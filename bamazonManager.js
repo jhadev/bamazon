@@ -97,14 +97,20 @@ const startApp = () => {
 
 const viewAllProducts = () => {
   connection.query("SELECT * FROM products", function (err, res) {
-    console.log(table.print(res))
+    if (err) throw (err);
+    console.log(table.print(res));
     
     startApp();
   });
 }
 
 const viewLowInventory = () => {
-  console.log(`this isnt finished`)
+  connection.query("SELECT * FROM products WHERE stock_quantity <= 10", function (err, res) {
+    if (err) throw (err);
+    console.log(table.print(res));
+
+    startApp();
+  });
 }
 
 const addToInventory = () => {
