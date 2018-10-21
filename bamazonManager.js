@@ -41,8 +41,19 @@ const welcome = () => {
     message: "Enter your manager password"
   },
   ]).then(answers => {
-    startApp()
+    if (answers.login === "manager") {
+      console.log(`Hello manager your password has been accepted`)
+      startApp();
+    }
+    else {
+      console.log("password denied, try again")
+      welcome();
+    }
     });
 }
 
 const header = '==========================WELCOME TO BAMAZON=========================='
+
+const startApp = () => {
+  console.log(`this isnt finished`)
+}
