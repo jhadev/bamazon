@@ -103,7 +103,7 @@ const viewAllProducts = () => {
 }
 
 const viewLowInventory = () => {
-  connection.query("SELECT * FROM products WHERE stock_quantity <= 10", function (err, res) {
+  connection.query("SELECT * FROM products WHERE stock_quantity <= 10 ORDER by stock_quantity DESC", function (err, res) {
     if (err) throw (err);
     console.log(table.print(res));
     console.log(`${footer}`);
